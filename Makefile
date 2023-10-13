@@ -1,4 +1,4 @@
-all: main
+all: build/main-wait build/main-nowait
 
 CC = clang
 override CFLAGS += -g -pthread -lm
@@ -13,4 +13,4 @@ main-debug: $(SRCS) $(HEADERS)
 	$(CC) $(CFLAGS) -O0 $(SRCS) -o "$@"
 
 clean:
-	rm -f main main-debug
+	rm -f main build/main-wait build/main-nowait

@@ -4,15 +4,20 @@
 #include <time.h>
 #include <unistd.h>
 
-#define NUM_THREAD 2
+#define NUM_THREAD 5
+#define USLEEP 0 // Fix for running on Replit
+#define MAX_NUM 5
 
 long request;
 long respond;
 ushort quit;
 
+int SOMA = 0;
+
 void *server(void *args) {
   while (!quit) {
     while (request == 0 && quit == 0) {
+      usleep(USLEEP);
     }
     printf("\nResolvendo request: %ld", request);
     fflush(stdout);
@@ -23,6 +28,7 @@ void *server(void *args) {
     }
     respond = request;
     while (respond != 0) {
+      usleep(USLEEP);
     }
     request = 0;
   }
@@ -36,17 +42,22 @@ void *server(void *args) {
 void *client(void *args) {
   long id = (long)args;
 
-  while (respond != id) {
-    if (request != id) {
-      request = id;
-    }
+  for (int i = 0; i < MAX_NUM; i++) {
+
+    /*while (respond != id) {
+      if (request != id) {
+        request = id;
+      }
+      usleep(USLEEP);
+    }*/
+
+    usleep(USLEEP);
+    int local = SOMA;
+    sleep(rand() % 2);
+    SOMA = local + 1;
+
+    respond = 0;
   }
-
-  printf("\nPrintando ");
-  printf("%ld", id);
-  fflush(stdout);
-
-  respond = 0;
 
   pthread_exit(NULL);
 }
@@ -78,6 +89,8 @@ int main(void) {
   printf("\n\n");
 
   quit = 1;
+
+  printf("\nSoma final: %d\n\n", SOMA);
 
   pthread_exit(NULL);
   return 0;
