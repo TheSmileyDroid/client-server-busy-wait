@@ -44,12 +44,12 @@ void *client(void *args) {
 
   for (int i = 0; i < MAX_NUM; i++) {
 
-    /*while (respond != id) {
+    while (respond != id) {
       if (request != id) {
         request = id;
       }
       usleep(USLEEP);
-    }*/
+    }
 
     usleep(USLEEP);
     int local = SOMA;
